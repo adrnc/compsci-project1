@@ -1,5 +1,6 @@
 from transformers import RagTokenizer, RagRetriever, RagTokenForGeneration
 
+# TODO: https://huggingface.co/facebook/rag-token-nq
 tokenizer = RagTokenizer.from_pretrained("facebook/rag-token-nq")
 
 retriever = RagRetriever.from_pretrained("facebook/rag-token-nq", index_name="exact", use_dummy_dataset=True)
