@@ -4,7 +4,7 @@ from transformers import pipeline, set_seed
 qa_model_name = "consciousAI/question-answering-roberta-base-s-v2"
 chat_model_name = "openai-community/gpt2-xl"
 
-chat_max_length = 256
+chat_max_length = 100
 chat_num_return_sequences = 1
 
 context = "🤗 Transformers is backed by the three most popular deep learning libraries — Jax, PyTorch and TensorFlow — with a seamless integration between them. It's straightforward to train your models with one before loading them for inference with the other."
