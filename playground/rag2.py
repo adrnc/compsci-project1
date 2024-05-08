@@ -1,5 +1,5 @@
 # type: ignore
-from transformers import RagTokenizer, RagRetriever, RagTokenForGeneration, RagConfig
+from transformers import RagTokenizer, RagRetriever, RagTokenForGeneration
 import os
 
 # temporary fix
@@ -19,10 +19,10 @@ retriever = RagRetriever.from_pretrained(
     pretrained_retriever,
 
     # dataset to use for retrieval RAG, "wiki_dpr" by default
-    #dataset="wiki_dpr",
+    dataset="DiscoResearch/germanrag",
 
     # use the dummy dataset
-    use_dummy_dataset=True,
+    #use_dummy_dataset=True,
 
     # specifies number of documents to retrieve, 5 by default
     # not sure yet how this is used
