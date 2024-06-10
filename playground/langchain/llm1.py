@@ -53,4 +53,12 @@ rag_chain = (
 )
 
 answer = rag_chain.invoke("What is Task Decomposition?")
+
 print(answer)
+'''
+Task Decomposition can be done using human inputs. For example, they could ask questions such as:
+
+1. What is the main purpose of the task?
+2. How would you improve the efficiency of the task?
+3. How would you ensure that the task does not rely on a long context window to communicate over complicated task content?
+'''
