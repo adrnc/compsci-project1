@@ -1,3 +1,7 @@
+import os
+
+os.environ["USER_AGENT"] = "local"
+
 import bs4
 from langchain import hub
 from langchain_chroma import Chroma
@@ -5,9 +9,14 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.llms import Ollama, OllamaEmbeddings
+from langchain_community.llms import Ollama
+from langchain_community.embeddings.ollama import OllamaEmbeddings
 
-llm = Ollama(model="llama2")
+model = "qwen:0.5b"
+llm = Ollama(model=model)
+
+# start ollama (https://github.com/ollama/ollama) locally like:
+# ollama run "model"
 
 # Load, chunk and index the contents of the blog.
 loader = WebBaseLoader(
@@ -22,7 +31,11 @@ docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 splits = text_splitter.split_documents(docs)
-vectorstore = Chroma.from_documents(documents=splits, embedding=OllamaEmbeddings())
+vectorstore = Chroma.from_documents(
+    documents=splits,
+    persist_directory='chroma',
+    embedding=OllamaEmbeddings(model=model, show_progress=True),
+)
 
 # Retrieve and generate using the relevant snippets of the blog.
 retriever = vectorstore.as_retriever()
@@ -40,4 +53,4 @@ rag_chain = (
     | StrOutputParser()
 )
 
-rag_chain.invoke("What is Task Decomposition?")
+response = rag_chain.invoke("What is Task Decomposition?")
