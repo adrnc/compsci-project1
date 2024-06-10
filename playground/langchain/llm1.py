@@ -52,4 +52,5 @@ rag_chain = (
     | StrOutputParser()
 )
 
-response = rag_chain.invoke("What is Task Decomposition?")
+answer = rag_chain.invoke("What is Task Decomposition?")
+print(answer)
