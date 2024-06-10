@@ -1,6 +1,10 @@
 import os
-
 os.environ["USER_AGENT"] = "local"
+
+import typing
+type_check = typing.TYPE_CHECKING
+print(f"type checking: {type_check}")
+assert(not type_check)
 
 import bs4
 from langchain import hub
@@ -33,7 +37,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=20
 splits = text_splitter.split_documents(docs)
 vectorstore = Chroma.from_documents(
     documents=splits,
-    persist_directory='chroma',
+    #persist_directory='chroma',
     embedding=OllamaEmbeddings(model=model, show_progress=True),
 )
 
