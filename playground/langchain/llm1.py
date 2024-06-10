@@ -1,11 +1,6 @@
 import os
 os.environ["USER_AGENT"] = "local"
 
-import typing
-type_check = typing.TYPE_CHECKING
-print(f"type checking: {type_check}")
-assert(not type_check)
-
 import bs4
 from langchain import hub
 from langchain_chroma import Chroma
