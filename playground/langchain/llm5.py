@@ -10,6 +10,7 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.embeddings.ollama import OllamaEmbeddings
 from langchain_community.llms import Ollama
 from langchain_core.chat_history import BaseChatMessageHistory
+from langchain_core.messages import AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -97,3 +98,23 @@ conversational_rag_chain = RunnableWithMessageHistory(
     history_messages_key="chat_history",
     output_messages_key="answer",
 )
+
+conversational_rag_chain.invoke(
+    {"input": "What is Task Decomposition?"},
+    config={
+        "configurable": {"session_id": "abc123"}
+    },  # constructs a key "abc123" in `store`.
+)
+
+conversational_rag_chain.invoke(
+    {"input": "What are common ways of doing it?"},
+    config={"configurable": {"session_id": "abc123"}},
+)
+
+for message in store["abc123"].messages:
+    if isinstance(message, AIMessage):
+        prefix = "AI"
+    else:
+        prefix = "User"
+
+    print(f"{prefix}: {message.content}\n")
